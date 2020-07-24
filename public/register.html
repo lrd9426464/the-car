@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,6 +87,10 @@
          background: url("img/err.png") no-repeat;
          padding-left:20px ;
       }
+      .show{
+         display: block !important;
+         position: absolute;
+      }
    </style>
 </head>
 <body>
@@ -100,7 +104,7 @@
          <input v-model="ph_msg" @input="phone_show" class="must" type="text" placeholder="请填写您的手机号作为登录账号">
          <p :class="ph_isRight==true?'suc':'err'">{{phone_msg}}</p>
          <h4>用户名</h4>
-         <input v-model="un_msg" @input="uname_show" class="must" type="text" placeholder="可输入3~7位的数字、字母，区分大小写">
+         <input v-model="un_msg" @input="uname_show" @blur="leave" class="must" type="text" placeholder="可输入3~7位的数字、字母，区分大小写">
          <!-- <p>用户名已存在</p> -->
          <p :class="un_isRight==true?'suc':'err'">{{uname_msg}}</p>
          <h4>密码</h4>
@@ -156,6 +160,24 @@
                   this.un_isRight=false;
                   this.uname_msg="用户名格式有误";
                }
+            },
+            leave(e){
+               axios.defaults.baseURL="http://127.0.0.1:8080";
+               axios.get('/ajax/v1/verification',{
+                  params:{
+                     uname:this.un_msg
+                  }
+               })
+               .then((result)=>{
+                  if(result.data==""){
+                     return  ;
+                  }else{
+                     // console.log(e.target.nextElementSibling)
+                     e.target.nextElementSibling.setAttribute("class","show");
+                     this.uname_msg="用户名已存在";
+                  }
+                  // console.log(result);
+               });
             },
             upwd_show(){
                var reg=/^(\w|["*","-","+",".","~"]){6,12}$/;

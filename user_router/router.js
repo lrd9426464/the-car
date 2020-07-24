@@ -57,4 +57,14 @@ router.get("/v1/details3",(req,res)=>{
         }
     });
 });
+
+router.get("/v1/verification",(req,res)=>{
+    let uname=req.query.uname;
+    pool.query("select uid from user where uname=?",[uname],(err,result)=>{
+        if(err) throw err;
+        // console.log(result)
+        res.send(result[0]);
+    });
+});
+
 module.exports=router;
