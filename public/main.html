@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="css/bootstrap.css">
+   <script src="js/jquery.min.js"></script>
+   <script src="js/popper.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+   <script src="js/vue.js"></script>
+   <title>首页</title>
+   <style>
+      * {
+         margin: 0;
+         padding: 0;
+      }
+      #d1 {
+         width: 100%;
+         height: 60px;
+         background-color: white;
+         position: fixed;
+         top: 0;
+         z-index: 999;
+         margin: 0 auto;
+      }
+      #top {
+         width: 800px;
+         list-style: none;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         margin: 0 auto;
+      }
+      #top li a {
+         font-size: 17px;
+         font-weight: 400;
+         text-decoration: none;
+         color: #333333;
+      }
+      #top li a:hover {
+         color: coral;
+      }
+      #msg {
+         width: 1400px;
+         display: flex;
+         flex-wrap: nowrap;
+         justify-content: space-around;
+         margin: 200px auto 0;
+         perspective: 800px;
+      }
+      #img_left,
+      #img_right {
+         text-align: left;
+         font-size: 40px;
+         font-weight: bold;
+      }
+      #img_left {
+         animation: car_left 1.5s;
+      }
+      #img_right {
+         text-align: right;
+         animation: car_right 1.5s;
+      }
+      #left-time,
+      #left-speed,
+      #right-people,
+      #right-load {
+         margin: 120px 30px 0px 30px;
+      }
+
+      #img_left img {
+         vertical-align: middle;
+      }
+
+      #img_right img {
+         vertical-align: middle;
+      }
+
+      #car_msg {
+         background: url(https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvZGNkYTQ2NDU3NGVkZDFjYWM5Yzk3ZDMyYjhlZjRkZTUtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp) no-repeat;
+         background-size: 420px;
+         background-position: bottom;
+      }
+
+      #car_msg img {
+         animation: car 1.5s;
+      }
+
+      #car_msg h1 {
+         font-size: 40px;
+         text-align: center;
+         margin: 35px 0px;
+      }
+
+      #car_msg img {
+         width: 700px;
+         margin: 0px auto;
+      }
+      #car_price{
+         margin-top: 200px !important;
+      }
+      #car_price ul{
+         text-align: justify;
+         list-style: none;
+         /* margin-bottom: 20px; */
+      }
+      #car_price ul::after{
+         content: "";
+         display: table;
+         clear: both;
+      }
+      #car_price>ul>li{
+         float: left;
+         width: 33%;
+      }
+      #about{
+         margin: 100px 0;
+         padding-top: 60px;
+         background-color: #FBF8F2;
+      }
+      #about::after{
+         content: "";
+         display: table;
+         clear: both;
+      }
+      #about>div:nth-child(2){
+         width: 70%;
+         margin: 50px auto;
+         text-indent: 2em;
+      }
+      #about>div:nth-child(3){
+         margin: 100px;
+      }
+      #about>div:nth-child(3)>h2{
+         width: 33%;
+         text-align: center;
+         margin-bottom: 70px;
+         float: left;
+      }
+      #about>div:nth-child(3)>h2>div{
+         display: inline;
+      }
+      #about>div:nth-child(3)>div{
+         clear: both;
+         width: 100%;
+      }
+      #about>div:nth-child(3)>div>a{
+         color: white;
+         border-radius: 5px;
+         padding: 15px 50px;
+         margin-left: 45%;
+         background-color: #E95E24;
+         text-decoration: none;
+      }
+      #about>div:nth-child(3)>a:hover{
+         background-color: #f16327;
+      }
+      #about>div:nth-child(4){
+         color: white;
+         width: 80%;
+         height: 485px;
+         margin: 0px auto;
+         margin-top: 200px;
+         background-color: #FDBB14;
+         background-image: url("https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvMDg2ZTFjOTcxZGM1NTI2NThhZmE4YjNjYjhkZmE5YjAtOTAud2VicA_p_p100_p_3D_p_p100_p_3D");
+         background-repeat: no-repeat;
+         background-position: 100% -60px;
+         position: relative;
+      }
+      #about>div:nth-child(4)>div{
+         width: 30%;
+         position: absolute;
+         top: 90px;
+         left: 60px;
+      }
+      #about>div:nth-child(4)>div>a>span{
+         display: inline-block;
+         margin-right: 10px;
+      }
+      #about>div:nth-child(4)>div>a{
+         display: inline-block;
+         text-decoration: none;
+         color: white;
+         padding: 20px 46px;
+         background-color: black;
+         border-radius: 5px;
+         margin: 25px 0;
+      }
+      #about>div:nth-child(4)>img{
+         /* position: absolute; */
+         margin-left: 60%;
+         margin-top: -80px;
+      }
+      #advantage>div:first-child{
+         margin-bottom: 50px;
+      }
+      #advantage>div:nth-child(2){
+         display: flex;
+         justify-content: space-between;
+      }
+      #advantage>div:nth-child(2)>div{
+         width: 25%;
+         text-align: center;
+      }
+      #advantage>div:not(:first-child) h4{
+         margin: 30px 0;
+      }
+      #join{
+         width: 100%;
+         margin-top: 300px;
+         padding-bottom: 50px;
+         background-color: #1A1A1A;
+      }
+      #join>div:first-child{
+         width: 66%;
+         height: 436px;
+         background-color: #000;
+         color: white;
+         position: relative;
+         margin: -50px auto 50px;
+         top: -70px;
+         background-image:url("https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvMDg2ZTFjOTcxZGM1NTI2NThhZmE4YjNjYjhkZmE5YjAtOTAud2VicA_p_p100_p_3D_p_p100_p_3D");
+         background-repeat: no-repeat;
+         background-position: 100% -60px;
+      }
+      #join>div:first-child>div{
+         position: absolute;
+         top: 100px;
+         left: 60px;
+         width: 30%;
+      }
+      #join>div:first-child>div p{
+         margin-top: 16px;
+      }
+      #join>div:first-child>img{
+         position: absolute;
+         bottom: 0;
+         right: 30px;
+      }
+      #join>div:nth-child(2){
+         text-align: center;
+      }
+      #join>div:nth-child(2)>h6{
+         color:#B7B5B0;
+      }
+      #join>div:nth-child(2)>h2{
+         font-weight: bold;
+         color: white;
+      }
+      #join>div:nth-child(2)>h2>span{
+         color: #E95E24;
+      }
+      #join>div:nth-child(3){
+         width: 80%;
+         display: flex;
+         justify-content: space-around;
+         margin: 50px auto;
+         text-align: left;
+         color: white;
+      }
+      #join>div:nth-child(3)>div{
+         width: 23%;
+         height: 350px;
+         border: 1px solid #292929;
+         padding:0 20px 10px 20px;
+      }
+      #join>div:nth-child(3) h3{
+         color: #FEBA12;
+         margin: 40px;
+      }
+      #join>div:nth-child(3) h6{
+         color: #999;
+      }
+      #join>div:nth-child(3) a{
+         text-decoration: none;
+         color: white;
+         padding: 10px 15px 10px 20px;
+         background-color: #E95E24;
+         border-radius: 5px;
+         display: inline-block;
+      }
+      #join>div:nth-child(3) a:hover{
+         background-color: #f16327;
+      }
+      #join>div:nth-child(3) a>span{
+         display: inline-block;
+         margin-left: 15px;
+      }
+      #contact>div:first-child{
+         text-align: center;
+         margin-bottom: 70px;
+      }
+      #contact>div:first-child>h6{
+         color:#B7B5B0;
+      }
+      #contact>div:first-child>h2{
+         font-weight: bold;
+         color: black;
+      }
+      #contact>div:first-child>h2>span{
+         color: #E95E24;
+      }
+      #contact>div:nth-child(2){
+         display: flex;
+         justify-content: space-around;
+         font-size: 14px;
+         color: rgb(61, 61, 61);
+      }
+      #contact>div:nth-child(2)>div{
+         width: 30%;
+      }
+      #contact>div:nth-child(2)>div>div{
+         display: inline-block;
+         width: 80%;
+         margin-left: 5px;
+      }
+      #contact>div:nth-child(2)>div h5{
+         font-weight: bold;
+         margin-bottom: 60px;
+      }
+      #contact>div:nth-child(2)>div img{
+         vertical-align: top;
+      }
+      #contact>div:nth-child(2) #con_phone{
+         font-size: 25px;
+         font-weight: bold;
+         color: #000;
+      }
+      #contact>div:nth-child(2) #time>div>div:nth-child(2){
+         margin-bottom: 15px;
+      }
+      #email{
+         padding-bottom: 50px;
+      }
+      #email>div:first-child{
+         text-align: center;
+         margin-bottom: 40px;
+      }
+      #email>div:first-child h2{
+         margin: 15px 0;
+      }
+      #email>div:first-child>h2{
+         font-weight: bold;
+         color: black;
+      }
+      #email>div:first-child>h2>span{
+         color: #E95E24;
+      }
+      #email>div:nth-child(2) input{
+         height: 66px;
+      }
+      #email>div:nth-child(2) input:focus{
+         border: 1px solid #E95F24;
+      }
+      #email>div:nth-child(2) textarea,
+      #email>div:nth-child(2) input{
+         width: 700px;
+         border: 1px solid rgb(237, 237, 237);
+         outline: 0;
+         font-size:14px;
+         display: block;
+         margin: 0 auto 10px;
+         border-radius: 5px;
+         padding-left: 20px;
+      }
+      #email>div:nth-child(2) textarea{
+         height: 230px;
+      }
+      #email>div:nth-child(3){
+         margin-top: 20px;
+         text-align: center;
+      }
+      #email>div:nth-child(3) a{
+         text-decoration: none;
+         color: white;
+         padding: 20px 50px;
+         background-color: #E95E24;
+         border-radius: 5px;
+         display: inline-block;
+      }
+      #bottom{
+         padding: 50px 130px 50px 130px;
+         background-color: #faf5f5;
+         display: flex;
+         justify-content: space-between;
+      }
+      #bot{
+         list-style: none;
+         display: flex;
+         padding: 30px 100px;
+         text-align: right;
+         justify-content: flex-end;
+         background-color: #faf5f5;
+      }
+      #bot li{
+         margin-left: 20px;
+      }
+      #bot img{
+         width: 20px;
+      }
+      #back,#register{
+         position: fixed;
+         right: 3px;
+      }
+      #back{
+         bottom: 150px;
+      }
+      #register{
+         bottom: 220px;
+      }
+      #register a{
+         text-decoration: none;
+         color: #E95E24;
+         padding: 19px 31px;
+      }
+      #back a,#register a{
+         background-color: #EFEFEF;
+         box-shadow: 0 0 6px 1px #cecccc;
+         opacity: .5;
+      }
+      #back a{
+         text-decoration: none;
+         color: #E95E24;
+         font-size: 30px;
+         padding: 2px 27px 5px 27px;
+         border-radius: 3px;
+      }
+      #back img{
+         width: 40px;
+      }
+      #back a:hover{
+         background-color: #e9e8e8;
+      }
+      @keyframes car {
+         0% {
+            transform: translateZ(-600px);
+         }
+
+         50% {
+            transform: translateZ(150px);
+         }
+
+         100% {
+            transform: translateZ(0);
+         }
+      }
+
+      @keyframes car_left {
+         0% {
+            transform: translateX(-500px);
+         }
+
+         100% {
+            transform: translateX(0px);
+         }
+      }
+
+      @keyframes car_right {
+         0% {
+            transform: translateX(500px);
+         }
+
+         100% {
+            transform: translateX(0px);
+         }
+      }
+
+      .w-33 {
+         width: 33%;
+      }
+
+      .font32 {
+         font-size: 2rem;
+      }
+   </style>
+</head>
+<body>
+   <div id="app">
+      <div id="d1">
+         <ul id="top">
+            <li>
+               <a href="#">首页</a>
+            </li>
+            <li>
+               <a href="#car_price">价格</a>
+            </li>
+            <li>
+               <a href="#about">关于</a>
+            </li>
+            <li>
+               <a href="#">
+                  <img src="img/top.webp" alt="">
+               </a>
+            </li>
+            <li>
+               <a href="#advantage">优势</a>
+            </li>
+            <li>
+               <a href="#join">加盟</a>
+            </li>
+            <li v-if="islogin==false">
+               <a href="javascript:;" @click="reg">{{reg_msg}}</a>&nbsp;/&nbsp;<a href="javascript:;" @click="login">{{lo_msg}}</a>
+            </li>
+            <li v-else>
+               {{reg_msg}}&nbsp;/&nbsp;<a href="javascript:;" @click="del">{{lo_msg}}</a>
+            </li>
+         </ul>
+      </div>
+      <div id="msg">
+         <div id="img_left">
+            <div id="left-time">
+               <img src="img/car-time.webp" alt="" id="time">
+               <span>10分钟</span>
+            </div>
+            <div id="left-speed">
+               <img src="img/car-speed.webp" alt="" id="speed">
+               <span>￥50/km</span>
+            </div>
+         </div>
+         <div id="car_msg">
+            <h1 style="font-weight: bolder;">欢迎使用汽车租赁软件</h1>
+            <img src="img/car.webp" alt="">
+         </div>
+         <div id="img_right">
+            <div id="right-people">
+               <span>1-4人</span>
+               <img src="img/car-people.webp" alt="" id="people">
+            </div>
+            <div id="right-load">
+               <span>500公斤</span>
+               <img src="img/car-loadbearing.webp" alt="" id="load">
+            </div>
+         </div>
+      </div>
+      <div id="car_price" class="container px-0 mt-5 pt-5 ">
+         <div class="text-center">
+            <h6 class="text-muted">Our Fleet & Pricing</h6>
+            <h2 class="font-weight-bold">车队<span class="text-danger">报价</span></h2>
+         </div>
+         <ul>
+            <li class="car_price_msg">
+               <div class="d-flex">
+                  <div class="card border-0 w-100 center">
+                     <div>
+                        <img
+                           src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvODlhZTA3NGQ0MDE4NjM4NWE3ZWIyNWZjYWVlOGEyZTctOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp"
+                           alt="">
+                     </div>
+                     <div>
+                        <img
+                           src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvMTI4YzhhNjVhMGQ2Nzg1NWYxMmY3MGM1MDZjYzIyZTQtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp"
+                           alt="">
+                        <span class="font-weight-bold font32">1-5</span>
+                     </div>
+                     <div>
+                        <img
+                           src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvM2NhNGU0YTZjYmRiNGNlMWE5OTA4ZThhNzQxNjA0YTEtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp"
+                           alt="">
+                        <span class="font32 font-weight-bold">￥50/km</span>
+                     </div>
+                     <h3 class="font-weight-bold my-4">家用汽车</h3>
+                     <ul class="list-unstyled">
+                        <li><span>载重：</span><span>8吨</span></li>
+                        <li><span>长宽高：</span><span>6.8*2.3*2.4</span></li>
+                        <li><span>载货体积：</span><span>37.5方</span></li>
+                     </ul>
+                     <a href="javascript:;" class="btn btn-danger w-50" @click="details">立即预定</a>
+                  </div>
+               </div>
+            </li>
+            <li class="car_price_msg">
+               <div class="d-flex">
+                  <div class="card border-0 w-100">
+                     <div>
+                        <img
+                           src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvODlhZTA3NGQ0MDE4NjM4NWE3ZWIyNWZjYWVlOGEyZTctOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp"
+                           alt="">
+                     </div>
+                     <div>
+                        <img
+                           src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvMTI4YzhhNjVhMGQ2Nzg1NWYxMmY3MGM1MDZjYzIyZTQtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp"
+                           alt="">
+                        <span class="font-weight-bold font32">1-7</span>
+                     </div>
+                     <div>
+                        <img
+                           src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvM2NhNGU0YTZjYmRiNGNlMWE5OTA4ZThhNzQxNjA0YTEtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp"
+                           alt="">
+                        <span class="font32 font-weight-bold">￥70/km</span>
+                     </div>
+                     <h3 class="font-weight-bold my-4">面包车</h3>
+                     <ul class="list-unstyled">
+                        <li><span>载重：</span><span>8吨</span></li>
+                        <li><span>长宽高：</span><span>6.8*2.3*2.4</span></li>
+                        <li><span>载货体积：</span><span>37.5方</span></li>
+                     </ul>
+                     <a href="javascript:;" class="btn btn-danger w-50" @click="details">立即预定</a>
+                  </div>
+               </div>
+            </li>
+            <li class="car_price_msg">
+               <div class="d-flex">
+                  <div class="card border-0 w-100">
+                     <div>
+                        <img
+                           src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvODlhZTA3NGQ0MDE4NjM4NWE3ZWIyNWZjYWVlOGEyZTctOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp"
+                           alt="">
+                     </div>
+                     <div>
+                        <img
+                           src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvMTI4YzhhNjVhMGQ2Nzg1NWYxMmY3MGM1MDZjYzIyZTQtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp"
+                           alt="">
+                        <span class="font-weight-bold font32">1-10</span>
+                     </div>
+                     <div>
+                        <img
+                           src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvM2NhNGU0YTZjYmRiNGNlMWE5OTA4ZThhNzQxNjA0YTEtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp"
+                           alt="">
+                        <span class="font32 font-weight-bold">￥100/km</span>
+                     </div>
+                     <h3 class="font-weight-bold my-4">小型客车</h3>
+                     <ul class="list-unstyled">
+                        <li><span>载重：</span><span>8吨</span></li>
+                        <li><span>长宽高：</span><span>6.8*2.3*2.4</span></li>
+                        <li><span>载货体积：</span><span>37.5方</span></li>
+                     </ul>
+                     <a href="javascript:;" class="btn btn-danger w-50" @click="details">立即预定</a>
+                  </div>
+               </div>
+            </li>
+         </ul>
+      </div>
+      <div id="about">
+         <div class="text-center">
+            <h6 class="text-muted">About us</h6>
+            <h2 class="font-weight-bold">关于<span class="text-danger">我们</span></h2>
+         </div>
+         <div>
+            河南通元汽车租赁有限公司为股份合作制企业，总部设立于郑州市大学北路30号中苑名都A座2711室。现已成为河南地区管理先进、具备相当规模的汽车租赁企业之一。公司现有注册资本1000万元，运营车辆500余辆。河南通元汽车租赁有限公司是通过交通管理局资质审验合格的企业。河南通元汽车租赁有限公司主要以轿车租赁服务为主，为政府机构、企事业单位、商务活动 、休闲旅游、婚礼庆典、新手陪练、短途接送等用车提供便捷服务。河南通元汽车租赁有限公司可为客户提供的车型多达20余种，以中高档车型为主，包括：奔驰、宝马、奥迪A6、奔驰商务、别克商务、瑞风商务，帕萨特、福特蒙迪欧智胜、福特福克斯、别克君威、君越、凯越、北京现代悦动、伊兰特、桑塔纳3000、捷达、宇通、金龙客车等车型。在租车的过程中，客户可享受到我们专业化的配套服务，包括救援、检修、保养、年检、车辆证照手续、车辆替换。客户对车型如有特殊要求，租期超过1年以上的，公司可以应客户要求购买新的车辆。我们立志打造最便利、迅捷、经济、时尚的汽车租赁服务。公司以“开拓，求实，高效，守信”为宗旨，是河南省受广大客户好评的汽车租赁单位，公司的每一辆车都是通元汽车租赁至诚至爱的奉献。同时也溶入了通元汽车租赁尽善尽美的服务。“诚信”是我们经营的立足之本，“创新”是我们发展的生存之源，“便捷”是我们服务努力的方向，用户的满意是我们最大的收益，用户的信赖是我们最大的成果。通元汽车租赁有限公司愿为您的事业成功助一臂之力，愿为您提供优质服务献上一片热情，让我们携起手来，与时俱进，共创美好未来。
+         </div>
+         <div>
+            <h2>
+               <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvOTgyNjNmMGFiNTE0OTU1NWViODE0ZmIwYWU3OWVhN2ItOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp" alt="">
+               <div>8</div>
+               <div>市场经验</div>
+            </h2>
+            <h2>
+               <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvNjA0ZDQ0YjhlN2M4ZmQxZTJlYmFlNmE3ZmZlYWJlNDQtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp" alt="">
+               <div>43</div>
+               <div>覆盖省市地区</div>
+            </h2>
+            <h2>
+               <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvMWRmNDI2Mjc3Y2Q4NTM0NmUxNmQ5YjA1OWY2ZDYxMDItOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp" alt="">
+               <div>556</div>
+               <div>车型选择</div>
+            </h2>
+            <div>
+               <a href="javascript:;">联系我们</a>
+            </div>
+         </div>
+         <div>
+            <div>
+               <p>our APP</p>
+               <h1>方便快捷处理您的需求</h1>
+               <a href="javascript:;">立即下载
+                  <span>></span>
+               </a>
+            </div>
+            <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvYzE3ZTNjODdkZjY0NjA5ZWY1ZWY3YjE3Y2E3NmQ1NmQtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp" alt="">
+         </div>
+      </div>
+      <div id="advantage" class="container px-0 mt-5 pt-5">
+         <div class="text-center">
+            <h6 class="text-muted">Advantage</h6>
+            <h2 class="font-weight-bold">我们的<span class="text-danger">优势</span></h2>
+         </div>
+         <div>
+            <div>
+               <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvNDUzOGI5NTNlZWE0NWZlNTRmZmJhOTQ1MDM5NzhkZmQtMTEweDg5LTkwLndlYnA_p_p100_p_3D.webp" alt="">
+               <h4>5秒响应 30分钟上门</h4>
+               <p>您选择好车型后，我们会以最快的速度上门提供一对一服务，我们会尽量满足您的需要。</p>
+            </div>
+            <div>
+               <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvODYzZDkwYjc5ODM5MjA2NDUwOTJlODYxMTBiMDZhMjMtMTEweDg5LTkwLndlYnA_p_p100_p_3D.webp" alt="">
+               <h4>价格透明 绝不坐地起价</h4>
+               <p>我们的价格绝对透明公开，放心租借，是我们对您的保证！</p>
+            </div>
+            <div>
+               <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvZWZkMDViZDI5MzYxNTVlY2VmZTUzNmY2NGZlNmRiNTMtMTEweDg5LTkwLndlYnA_p_p100_p_3D.webp" alt="">
+               <h4>司机认证有保障</h4>
+               <p>我们的司机都是经过专业认证并且合格，请您绝对放心！</p>
+            </div>
+         </div>
+      </div>
+      <div id="join">
+         <div>
+            <div>
+               <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvNzA3Zjc5NjY2MTk4OGUwZmIzNmRhMmE3NjRjNDJjZTctOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp" alt="">
+               <p>成功靠朋友，成长靠对手，成就靠团队。创意是金钱，策划显业绩，思考才致富。知道是知识，做到才智慧，多做少多说。积极激励我，多劳多收获，汗水育成果。梦想聚团队，团队铸梦想，激情快乐人。</p>
+               <p>Jonathan, Betheme</p>
+            </div>
+            <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvMzAxZmM1MDAyZGE5NTE3YmUzZjI4ZTE5ZDEyMDU4NTEtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp" alt="">
+         </div>
+         <div>
+            <h6>Join us</h6>
+            <h2>加入<span>我们</span></h2>
+         </div>
+         <div>
+            <div>
+               <h3>货车司机</h3>
+               <p>您可以双击这里或者点击编辑按钮来修改内您还可以添加图标，按钮，图片等常用元素等</p>
+               <h6>工作地点</h6>
+               <p>中新大道西128号</p>
+               <a href="javascript:;">加入我们<span>></span></a>
+            </div>
+            <div>
+               <h3>客车司机</h3>
+               <p>您可以双击这里或者点击编辑按钮来修改内您还可以添加图标，按钮，图片等常用元素等</p>
+               <h6>工作地点</h6>
+               <p>中新大道西128号</p>
+               <a href="javascript:;">加入我们<span>></span>
+               </a>
+            </div>
+            <div>
+               <h3>家用汽车</h3>
+               <p>您可以双击这里或者点击编辑按钮来修改内您还可以添加图标，按钮，图片等常用元素等</p>
+               <h6>工作地点</h6>
+               <p>中新大道西128号</p>
+               <a href="javascript:;">加入我们<span>></span></a>
+            </div>
+         </div>
+      </div>
+      <div id="contact" class="container px-0 mt-5 pt-5">
+         <div>
+            <h6>Contact us</h6>
+            <h2>联系<span>我们</span></h2>
+         </div>
+         <div>
+            <div id="address">
+               <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvZjM5NzNhOTRmYTEzNGNiZGUzYjRiNmZkODRiNjM0MjUtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp" alt="">
+               <div>
+                  <h5>公司地址</h5>
+                  <p>江苏省苏州市工业园区中新大道西1288号加成大厦10楼1022室</p>
+               </div>
+            </div>
+            <div id="time">
+               <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvZjM5NzNhOTRmYTEzNGNiZGUzYjRiNmZkODRiNjM0MjUtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp" alt="">
+               <div>
+                  <h5>工作时间</h5>
+                  <div>
+                     <span>周一 ~ 周五</span><br>
+                     <span>08:00 am - 06:00 pm</span>
+                  </div>
+                  <div>
+                     <span>周六</span><br>
+                     <span>09:00 am - 05:00 pm</span>
+                  </div>
+               </div>
+            </div>
+            <div id="con_us">
+               <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvZjM5NzNhOTRmYTEzNGNiZGUzYjRiNmZkODRiNjM0MjUtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp" alt="">
+               <div>
+                  <h5>联系我们</h5>
+                  <p id="con_phone">+86 188 9865 2356</p>
+                  <p>全天7*24在线客服</p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="email" class="container px-0 mt-5 pt-5">
+         <div>
+            <div>
+               <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvZTUwZTY0OTcxNzY1NGNiMjUzYWM4YTViYmQ4Y2MzZTMtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp" alt="">
+            </div>
+            <h2>在线<span>留言</span></h2>
+         </div>
+         <div>
+            <input type="text" placeholder="姓名" v-model="ename">
+            <input type="text" placeholder="邮箱" v-model="email">
+            <input type="text" placeholder="电话" v-model="phone">
+            <textarea name="" id="" cols="30" rows="10" placeholder="内容" v-model="content"></textarea>
+         </div>
+         <div>
+            <a href="javascript:;" @click="message">点击提交</a>
+         </div>
+      </div>
+      <div id="bottom">
+         <div>
+            <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvYmQzYmM4NDMzYWZlMWZiMzEzYjJiMTE3NjE0MDU4OTgtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp" alt=""><br>
+            <span>© 2019  河南通元汽车租赁有限公司.  All Rights reserved</span>
+         </div>
+         <ul id="bot">
+            <li>
+               <a href="javascript:;"><img src="img/QQ.png" alt=""></a>
+            </li>
+            <li>
+               <a href="javascript:;"><img src="img/微博.png" alt=""></a>
+            </li>
+            <li>
+               <a href="javascript:;"><img src="img/微信.png" alt=""></a>
+            </li>
+         </ul>
+      </div>
+      <div id="register">
+         <a href="register.html" target="_blank">注册</a>
+      </div>
+      <div id="back">
+         <a href="#"><img src="img/上.png" alt=""></a>
+      </div>
+   </div>
+   <script>
+      // var url=location.search;
+      // var reg=/[?=&]/;
+      var obj=location.search.split("?");
+      var r_msg;
+      var l_msg;
+      var islogin;
+      // console.log(obj);
+      if(obj.length!==1){
+         r_msg=`欢迎${obj[1]}`;
+         l_msg="注销";
+         islogin=true;
+      }else{
+         r_msg="注册";
+         l_msg="登录";
+         islogin=false;
+      }
+      new Vue({
+         el:"#app",
+         data:{
+            islogin:islogin,
+            reg_msg:r_msg,
+            lo_msg:l_msg,
+            ename:"",
+            email:"",
+            phone:"",
+            content:""
+         },
+         methods:{
+            login(){
+               window.location.assign("http://127.0.0.1:8080/login.html");
+               // setTimeout(function(){
+               //    this.islogin=true;
+               // },1000)
+            },
+            reg(){
+               window.location.assign(`http://127.0.0.1:8080/register.html?${obj[1]}`);
+               // setTimeout(function(){
+               //    this.islogin=true;
+               // },1000)
+            },
+            del(){
+               window.location.href="http://127.0.0.1:8080/main.html";
+               // location.reload();
+            },
+            details(){
+               window.location.assign(`http://127.0.0.1:8080/details.html?${obj[1]==undefined?'':obj[1]}`)
+            },
+            message(){
+               if(this.islogin==false){
+                  window.location.assign(`http://127.0.0.1:8080/login.html`)
+               }else{
+                  if(this.ename==""&&this.email==""&&this.phone==""&&this.content==""){
+                     alert("请填写留言内容！")
+                  }else{
+                     alert("提交完成!");
+                     this.ename="";
+                     this.email="";
+                     this.phone="";
+                     this.content="";
+                  }
+               }
+            }
+         }
+      })
+   </script>
+</body>
+</html>

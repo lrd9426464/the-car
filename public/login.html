@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>登录页面</title>
+   <script src="js/jquery-1.11.3.js"></script>
+   <script src="js/vue.js"></script>
+   <script src="js/axios.min.js"></script>
+   <style>
+      *{
+         margin: 0;
+         padding: 0;
+      }
+      #content>div:first-child{
+         /* 让图片垂直居中 */
+         display: table-cell;
+         vertical-align:middle;
+         font-size: 30px;
+         font-weight: bold;
+         color: #ec7a1d;
+         height: 100px;
+      }
+      #content>div:first-child img{
+         vertical-align: middle;
+      }
+      #content>div:nth-child(2){
+         width: 100%;
+         height: 600px;
+         background: url("img/car5.jpg") no-repeat;
+         background-position: 10% center;
+         background-color: #2f8ee7;
+         position: relative;
+      }
+      #content>div:nth-child(2)>div{
+         width: 400px;
+         height: 450px;
+         background-color: #fff9;
+         border-radius: 15px;
+         position: absolute;
+         top: 75px;
+         right: 130px;
+      }
+      #msg{
+         width: 300px;
+         margin: 0 auto;
+         position: relative;
+      }
+      #content>div:nth-child(2) p{
+         position: relative;
+      }
+      .unshow{
+         display: none;
+      }
+      #content>div:nth-child(2) p input{
+         padding-left: 50px;
+         width: 100%;
+         height: 40px;
+         border: 1px solid #47414133;
+         margin-top: 30px;
+         border-radius: 10px;
+         background-color: rgba(255, 255, 255, 0.82);
+         outline: none;
+         box-sizing: border-box;
+      }
+      #uname input{
+         background: url("img/yhm.png") no-repeat;
+      }
+      #upwd input{
+         background: url("img/mm.png") no-repeat;
+      }
+      #uname input,
+      #upwd input{
+         background-position: 12px center;
+      }
+      /* #content>div:nth-child(2) img{
+         position: absolute;
+         top: 37px;
+         left: 15px;
+      } */
+      #log{
+         margin-top: 50px;
+         font-size: 20px;
+         font-weight: bolder;
+         text-align: center;
+      }
+      /* #uname,#upwd{
+         margin-top : 20px;
+         margin-left: 55px;
+      } */
+      button{
+         width: 100%;
+         height: 40px;
+         color: white;
+         background-color: #ec5b1d;
+         margin-top: 40px;
+         border-radius: 5px;
+         border: 0;
+         outline: 0;
+      }
+      #radio{
+         font-size: 15px;
+         margin-top: 40px;
+      }
+      #radio a{
+         text-decoration: none;
+         color: #ec5b1d;
+      }
+      #radio input{
+         width: 20px;
+         height: 20px;
+         vertical-align: middle;
+      }
+      #radio span{
+         display: inline-block;
+         margin-left: 70px;
+      }
+      .error{
+         font-size: 14px;
+         position: absolute;
+         display: block !important;
+         background: url("img/err.png") no-repeat;
+         /* border:1px solid red; */
+         background-color: red;
+         background-position: 0 center;
+         padding-left: 20px;
+      }
+      /* .succ{
+         border: 0;
+         background: url("img/ok.png") no-repeat;
+         background-position: 0 center;
+         padding-left: 20px;
+      } */
+   </style>
+</head>
+<body>
+   <div id="content">
+      <div>
+         <img src="https://ccdn.goodq.top/caches/5b62fe32316baed82061444ab052341a/aHR0cHM6Ly81ZGQzYmRiZWRmZWMwLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTEvNjU5MTQ4OTk0NGRkOTBmN2U2ZTMwNWM5MjNmMjgyMzMtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp" alt="">
+         <span>欢迎登录汽车租贷网站</span>
+      </div>
+      <div>
+         <div id="app">
+            <div id="log">
+               登录
+            </div>
+            <div id="msg" @keyup="key">
+               <p id="uname">
+                  <!-- <img src="img/yhm.png" alt=""> -->
+                  <input type="text" placeholder="请输入用户名" @input="show_uname" v-model="un_msg">
+                  <span :class="un_err==true?'error':'unshow'">{{uname_msg}}</span>
+               </p>
+               <p id="upwd">
+                  <!-- <img src="img/mm.png" alt=""> -->
+                  <input type="password" placeholder="请输入密码" @input="show_upwd" v-model="up_msg">
+                  <span :class="up_err==true?'error':'unshow'">{{upwd_msg}}</span>
+               </p>
+               <button @click="login">登录</button>
+               <div id="radio">
+                  <!-- <input type="checkbox" name="rem">记住密码 -->
+                  <span>没有账号？<a href="register.html" target="rege">立即注册</a></span>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <script>
+      new Vue({
+         el:"#app",
+         data:{
+            uname_msg:"",
+            upwd_msg:"",
+            un_msg:"",
+            up_msg:"",
+            un_err:false,
+            up_err:false
+         },
+         methods:{
+            show_uname(){
+               // console.log("123");
+               var reg=/^[0-9a-zA-Z]{3,10}$/;
+               var bool=reg.test(this.un_msg.trim());
+               if(bool!==true){
+                  this.un_err=true;
+                  this.uname_msg="账号由3~7位的数字、字母组成";
+               }else{
+                  // console.log("123");
+                  this.un_err=false;
+                  this.uname_msg="";
+               }
+            },
+            show_upwd(){
+               var reg=/^(\w|["*","-","+",".","~"]){6,12}$/;
+               var bool=reg.test(this.up_msg.trim());
+               if(bool!==true){
+                  this.up_err=true;
+                  this.upwd_msg="密码由6~12位的数字、字母以及符号组成";
+               }else{
+                  // console.log("123");
+                  this.up_err=false;
+                  this.upwd_msg="";
+               }
+            },
+            login(){
+               var span=document.getElementsByTagName("span");
+               for(var elem of span){
+                  if(this.up_msg=="" || this.un_msg==""){
+                  //当遍历到某个input的value为空时，退出
+                     alert("密码或用户名为空");
+                     return;
+                  }else if(elem.className=="error"){
+                     return;
+                  }
+               }
+               // console.log(this.un_msg);
+               axios.defaults.baseURL="http://127.0.0.1:8080";
+               axios.get(`/ajax/v1/search/${this.un_msg}&${this.up_msg}`).then(function(result){
+                  // console.log(result.data);
+                  if(result.data==0){
+                     alert("用户名或密码错误");
+                  }else{
+                     alert("登陆成功");
+                     // console.log(result.data[0].uname);
+                     setTimeout(function(){
+                        window.location.assign(`main.html?${result.data[0].uname}`);
+                     },1000)
+                  }
+               });
+               // axios.post("/users/signin","uname=dingding&&upwd=123456").then(function(result){
+               //    console.log(result.data);
+               // });
+            },
+            key(e){
+               if(e.keyCode==13){
+                  this.login();
+               }
+            }
+         }
+      })
+   </script>
+</body>
+</html>
