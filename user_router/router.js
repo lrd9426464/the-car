@@ -7,6 +7,7 @@ router.get("/v1/search/:uname&:upwd",(req,res)=>{
     pool.query("select * from user where uname=? and upwd=?",[_uname,_upwd],(err,result)=>{
         if(err) throw err;
         if(result.length>0){
+            // console.log(result)
             res.send(result);
         }else{
             res.send("0");

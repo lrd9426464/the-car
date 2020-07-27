@@ -1,0 +1,26 @@
+{
+  "name": "the-car",
+  "version": "1.0.0",
+  "description": "A car rental website",
+  "main": "app.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mysql": "^2.15.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lrd9426464/the-car.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lrd9426464/the-car/issues"
+  },
+  "homepage": "https://github.com/lrd9426464/the-car#readme"
+}
